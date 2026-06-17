@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { useInventory, Location } from '../contexts/InventoryContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Card } from '../components/Card';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
@@ -9,6 +10,7 @@ import { Package } from 'lucide-react-native';
 
 export default function AddItemScreen() {
   const { addItem, products } = useInventory();
+  const { user } = useAuth();
   const navigation = useNavigation<any>();
 
   const [code, setCode] = useState('');
@@ -59,7 +61,8 @@ export default function AddItemScreen() {
         name,
         price: priceNum,
         quantity: qtyNum,
-        tag: location
+        tag: location,
+        lastEditedBy: user?.name || 'Admin'
       });
       setIsSaving(false);
       

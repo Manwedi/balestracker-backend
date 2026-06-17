@@ -277,6 +277,7 @@ app.post('/api/sales', async (req, res) => {
       if (row) {
         const currentQty = parseInt(row.get('quantity'), 10);
         row.set('quantity', Math.max(0, currentQty - saleItem.quantity));
+        row.set('lastEditedBy', `Sale (${transaction.soldBy || 'Staff'})`);
         await row.save();
       }
     }
